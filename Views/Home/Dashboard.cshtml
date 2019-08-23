@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    @model List<Wedding>
+    <div>
+        <h1>Welcome to Wedding Planner</h1>
+        <a href="/logout">Log Out</a>
+    </div>
+    <div>
+        <table>
+            <th>
+                <tr>
+                    <td><h4>Weddings</h4></td>
+                    <td><h4>Date</h4></td>
+                    <td><h4>Guests</h4></td>
+                    <td><h4>Actions</h4></td>
+                </tr>
+            </th>
+            <tbody>
+                @foreach(var item in @Model)
+                {
+                <tr>
+                    <td><a href="/wedding/@item.WeddingId">@item.WedOne & @item.WedTwo</a></td>
+                    <td>@item.Date</td>
+                    <td>@item.Guests.Count</td>
+                    <td>@if(ViewBag.id == item.UserId)
+                        {
+                            <a href="/delete/@item.WeddingId">Delete</a>
+                        }
+                        else if(item.Guests.Any(a => a.UserId == ViewBag.id))
+                        {
+                                <a href="/unrsvp/@item.WeddingId">Un-RSVP</a>
+                            
+                        }
+                        else{
+                            <a href="/rsvp/@item.WeddingId">RSVP</a> 
+                        }
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <a href="/new">New Wedding</a>
+</body>
+</html>
